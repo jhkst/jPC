@@ -17,6 +17,7 @@
  */
 package Main.UI;
 
+import Main.UI.MenuBar.JPCGraphics;
 import Main.UI.OutputPanel.JPCOutputPanel;
 import Main.UI.MenuBar.JPCMenuBar;
 import Main.Systems.AT386System;
@@ -177,6 +178,8 @@ public final class JPCWindow extends JFrame {
         systemMenu.addSystemHandler(XTSystem.SYSTEM_NAME, this::initSystem);
         systemMenu.addSystemHandler(AT386System.SYSTEM_NAME, this::initSystem);
         systemMenu.addSystemHandler(AT486System.SYSTEM_NAME, this::initSystem);
+
+        JPCGraphics graphicsMenu = emulationMenu.getGraphicsSelectionMenu();
         
         m_menuBar.updateUI();
     }
@@ -206,7 +209,9 @@ public final class JPCWindow extends JFrame {
             m_systemMenus.forEach(menu -> m_menuBar.remove(menu));
             m_systemMenus.clear();
         }
-        
+
+        JPCGraphics.GraphicsSelection selectedGfx = m_menuBar.getEmulationMenu().getGraphicsSelectionMenu().getSelectedGraphics();
+
         // Initialize new system
         JPCSystem system;
         try {
@@ -214,15 +219,15 @@ public final class JPCWindow extends JFrame {
             switch(systemName) {
 
                 case XTSystem.SYSTEM_NAME:
-                    system = new XTSystem(m_outputPanel);
+                    system = new XTSystem(m_outputPanel, selectedGfx);
                     break;
 
                 case AT386System.SYSTEM_NAME:
-                    system = new AT386System(m_outputPanel);
+                    system = new AT386System(m_outputPanel, selectedGfx);
                     break;
 
                 case AT486System.SYSTEM_NAME:
-                    system = new AT486System(m_outputPanel);
+                    system = new AT486System(m_outputPanel, selectedGfx);
                     break;
 
                 default:
@@ -378,7 +383,7 @@ public final class JPCWindow extends JFrame {
     private void onTakeScreenshot() {
         
         File defaultUserDir = FileSystemView.getFileSystemView().getDefaultDirectory();
-        File screenshotDir = new File(defaultUserDir, ".\\jPC\\");
+        File screenshotDir = new File(defaultUserDir, "." + File.separator + "jPC" + File.separator);
         
         try {
             

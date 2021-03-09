@@ -34,19 +34,19 @@ import Hardware.SystemRAM.ATSystemRAM;
 import Hardware.Timer.Intel8253;
 import Hardware.Video.GraphicsCardListener;
 import Hardware.Video.VGA.TsengET4000.TsengET4000;
-
+import Main.UI.MenuBar.JPCGraphics;
 
 
 public final class AT486System extends JPCSystem {
 
     public static final String SYSTEM_NAME = "AT 486 System";
     
-    public AT486System(GraphicsCardListener gfxListener) {
+    public AT486System(GraphicsCardListener gfxListener, JPCGraphics.GraphicsSelection gfxSelection) {
         
         super(SYSTEM_NAME, 32);
         
         addComponent(new Intel80386(CPUType.i486, true, getIOMap(), getMemoryMap(), getScheduler()));
-        addComponent(new TsengET4000(gfxListener));
+        addComponent(gfxSelection.create(gfxListener));
         addComponent(new PS2Controller());
         addComponent(new PS2Keyboard());
         addComponent(new PS2Mouse());

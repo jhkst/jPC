@@ -27,6 +27,7 @@ import javax.swing.JMenuItem;
 public final class JPCMenuEmulation extends JMenu {
     
     private final JPCMenuSystemSelection m_system;
+    private final JPCGraphics m_gfx;
     private final JMenuItem m_run;
     private final JMenuItem m_reset;
     private final JMenuItem m_pause;
@@ -35,14 +36,15 @@ public final class JPCMenuEmulation extends JMenu {
     private final JMenuItem m_statistic;
     private final JMenuItem m_fullscreen;
     private final JMenuItem m_exit;
-    
-    
-    
+
+
+
     public JPCMenuEmulation() {
         
         super("Emulation");
         
         add(m_system = new JPCMenuSystemSelection());
+        add(m_gfx = new JPCGraphics());
         add(m_run = new JCheckBoxMenuItem("Run"));
         add(m_reset = new JMenuItem("Reset"));
         add(m_pause = new JCheckBoxMenuItem("Pause"));
@@ -70,6 +72,10 @@ public final class JPCMenuEmulation extends JMenu {
     public JPCMenuSystemSelection getSystemSelectionMenu() {
         
         return m_system;
+    }
+
+    public JPCGraphics getGraphicsSelectionMenu() {
+        return m_gfx;
     }
     
     

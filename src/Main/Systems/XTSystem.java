@@ -29,22 +29,21 @@ import Hardware.InterruptController.PICs;
 import Hardware.Mouse.Serial.SerialMouse;
 import Hardware.Serial.UART16450;
 import Hardware.Speaker.Speaker;
-import Hardware.Video.VGA.TsengET4000.TsengET4000;
 import Hardware.Video.GraphicsCardListener;
 import Hardware.XTIDE.XTIDE;
-
+import Main.UI.MenuBar.JPCGraphics;
 
 
 public final class XTSystem extends JPCSystem {
     
     public static final String SYSTEM_NAME = "XT System";
     
-    public XTSystem(GraphicsCardListener gfxListener) {
+    public XTSystem(GraphicsCardListener gfxListener, JPCGraphics.GraphicsSelection gfxSelection) {
         
         super(SYSTEM_NAME, 20);
         
         addComponent(new Intel8086(getIOMap(), getMemoryMap(), getScheduler()));
-        addComponent(new TsengET4000(gfxListener));
+        addComponent(gfxSelection.create(gfxListener));
         addComponent(new XTKeyboard());
         addComponent(new Speaker());
         addComponent(new UART16450(1));
