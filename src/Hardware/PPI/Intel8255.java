@@ -33,10 +33,24 @@ public final class Intel8255 implements HardwareComponent,
     /* ----------------------------------------------------- *
      * DIP switch settings                                   *
      * ----------------------------------------------------- */
-    private final int m_dipSwitch = 0b01001100; // Don't loop on post, no coprocessor installed, 640kb ram, reserved
-                                                // display mode (for vga), two floppy drives
-    
-    /* ----------------------------------------------------- *
+
+    /*
+     * m_dipSwitch bites:
+     * 0b76543210
+     * +----+----------------------------------------------------------------------------------------------------------+
+     * | 10 | Floppy: 00 4 floppy, 10 3 floppy, 01 2 floppy, 11 1 floppy                                               |
+     * | 32 | Graphics: 00 MDA, 01 CGA 40x25, 02 CGA 80x25, 11 VGA                                                     |
+     * | 54 | RAM: 11 Bank 0 only, 01 Banks 0 and 1, 10 Banks 0, 1 and 2, 00 All 4 banks                               |
+     * |  6 | Math CoP: 0 Installed, 1 Not Installed                                                                   |
+     * |  7 | IBM PC: 0 Boot Floppy, 1 Not Boot Floppy; IBM XT: 0 Normal Power On Self Test, 1 Continuous Looping POST |
+     * +----+----------------------------------------------------------------------------------------------------------+
+     */
+  private int m_dipSwitch = 0b01001100; // Don't loop on post, no coprocessor installed, 640kb ram, reserved
+                                        // display mode (for vga), two floppy drives
+
+
+
+  /* ----------------------------------------------------- *
      * PPI registers                                         *
      * ----------------------------------------------------- */
     private int m_portA;
@@ -53,6 +67,10 @@ public final class Intel8255 implements HardwareComponent,
     
     
     public Intel8255() {
+    }
+
+    public Intel8255(int dipSwitch) {
+        this.m_dipSwitch = dipSwitch;
     }
     
     
