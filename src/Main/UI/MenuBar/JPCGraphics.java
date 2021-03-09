@@ -2,6 +2,7 @@ package Main.UI.MenuBar;
 
 import Hardware.Video.GraphicsCard;
 import Hardware.Video.GraphicsCardListener;
+import Hardware.Video.HGA.HGAAdapter;
 import Hardware.Video.VGA.TsengET4000.TsengET4000;
 
 import javax.swing.AbstractButton;
@@ -91,7 +92,8 @@ public class JPCGraphics extends JMenu {
    * Available Graphics adapters
    */
   public enum GraphicsSelection {
-    TSENG_ET4000("Tseng Labs ET4000", TsengET4000::new);
+    TSENG_ET4000("Tseng Labs ET4000", TsengET4000::new),
+    HERCULES("Hercules", HGAAdapter::new);
 
     private final String name;
     private final Function<GraphicsCardListener, GraphicsCard> creator;

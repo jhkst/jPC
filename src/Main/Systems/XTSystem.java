@@ -51,7 +51,9 @@ public final class XTSystem extends JPCSystem {
         addComponent(new XTIDE());
         addComponent(new PICs(true));
         addComponent(new Intel8253());
-        addComponent(new Intel8255());
+        addComponent(new Intel8255(gfxSelection == JPCGraphics.GraphicsSelection.HERCULES ?
+            0b01111100 : 0b01001100
+            ));
         addComponent(new Intel8237());
         addComponent(new XTSystemRAM());
         addComponent(new XTCloneBios());
